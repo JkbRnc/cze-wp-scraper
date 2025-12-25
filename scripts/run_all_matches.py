@@ -23,11 +23,6 @@ def main() -> None:
         type=str,
         help="Output CSV file path (optional). If not provided, prints to stdout.",
     )
-    parser.add_argument(
-        "--progress",
-        action="store_true",
-        help="Show progress during scraping",
-    )
 
     args = parser.parse_args()
 
@@ -44,10 +39,6 @@ def main() -> None:
 
     # Generate list of game IDs
     game_ids = list(range(1, args.max_game_id + 1))
-
-    if args.progress:
-        print("Starting scraping process...")
-        print()
 
     # Scrape matches
     scraper = MatchScraper()
