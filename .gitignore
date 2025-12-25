@@ -1,0 +1,12 @@
+# Python Cache
+__pycache__/
+.pytest_cache/
+.coverage
+.ruff_cache/
+.mypy_cache/
+
+# Venv
+.venv/
+
+# Data
+data/
