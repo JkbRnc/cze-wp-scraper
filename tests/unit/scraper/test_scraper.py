@@ -106,7 +106,7 @@ class TestMatchScraper:
             assert isinstance(result, MatchModel)
             assert result.game_id == 2425
             mock_httpx_client.fetch_match.assert_called_once_with(2425)
-            MatchInfoParser.parse_match.assert_called_once()
+            MatchInfoParser.parse_match.assert_called_once()  # type: ignore[attr-defined]
 
     def test_scrape_single_match_fetch_error(self, mock_httpx_client: MagicMock) -> None:
         """Test _scrape_single_match when fetch fails."""

@@ -227,6 +227,7 @@ class TestMatchInfoParser:
         """Test parsing when home team wins."""
         result = MatchInfoParser.parse_match(example_html, game_id=2425)
 
+        assert result is not None
         assert result.winner == "H"
         assert result.home_score > result.away_score
 
@@ -260,6 +261,7 @@ class TestMatchInfoParser:
         """
         result = MatchInfoParser.parse_match(html, game_id=123)
 
+        assert result is not None
         assert result.winner == "A"
         assert result.home_score < result.away_score
 
@@ -293,6 +295,7 @@ class TestMatchInfoParser:
         """
         result = MatchInfoParser.parse_match(html, game_id=123)
 
+        assert result is not None
         assert result.winner == "D"
         assert result.home_score == result.away_score
 
@@ -300,6 +303,7 @@ class TestMatchInfoParser:
         """Test parsing with different game_id."""
         result = MatchInfoParser.parse_match(example_html, game_id=9999)
 
+        assert result is not None
         assert result.game_id == 9999
         # Other fields should be the same
         assert result.home_team == "UKVP Stepp Praha"
@@ -322,14 +326,16 @@ class TestMatchInfoParser:
 
         result = MatchInfoParser.parse_match(example_html, game_id=2425)
 
+        assert result is not None
+
         assert isinstance(result.match_date, datetime)
-        # Check it's a datetime-like object
         assert hasattr(result.match_date, "strftime")
 
     def test_parse_match_all_fields_present(self, example_html: str) -> None:
         """Test that all required fields are extracted."""
         result = MatchInfoParser.parse_match(example_html, game_id=2425)
 
+        assert result is not None
         assert result.game_id is not None
         assert result.home_team is not None and result.home_team != ""
         assert result.away_team is not None and result.away_team != ""

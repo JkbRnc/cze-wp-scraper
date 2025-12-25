@@ -33,9 +33,9 @@ class MatchScraper:
         self.timeout = timeout
         self.user_agent = user_agent
 
-    def _get_client_kwargs(self) -> dict:
+    def _get_client_kwargs(self) -> dict[str, str | float]:
         """Get client initialization kwargs from instance attributes."""
-        client_kwargs = {}
+        client_kwargs: dict[str, str | float] = {}
         if self.base_url is not None:
             client_kwargs["base_url"] = self.base_url
         if self.timeout is not None:
@@ -125,7 +125,7 @@ class MatchScraper:
         """
         matches: list[MatchModel] = []
 
-        with HTTPMatchClient(**self._get_client_kwargs()) as client:
+        with HTTPMatchClient(**self._get_client_kwargs()) as client:  # type: ignore[arg-type]
             for game_id in game_ids:
                 match_data = self._scrape_single_match(client, game_id)
                 if match_data is not None:

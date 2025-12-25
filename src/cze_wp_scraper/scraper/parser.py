@@ -28,8 +28,11 @@ class MatchInfoParser:
         """Extract league and date from HTML."""
         try:
             date_league_div = soup.find("div", class_=cls.DATE_LEAGUE_DIV_CLASS)
+            if not date_league_div:
+                raise MatchParsingError("Failed to extract league and date")
             date_league_div = date_league_div.find("div", class_=cls.DATE_LEAGUE_TEXT_CLASS)
-
+            if not date_league_div:
+                raise MatchParsingError("Failed to extract league and date")
             date_league_text = date_league_div.get_text(strip=False)
             date_league_text = date_league_text.split("\n")[1].strip()
 
@@ -49,7 +52,11 @@ class MatchInfoParser:
         """Extract teams from HTML."""
         try:
             whole_div = soup.find("div", class_=cls.TEAM_HEADERS_CLASS)
+            if not whole_div:
+                raise MatchParsingError("Failed to extract teams")
             team_headers = whole_div.find_all("h3")
+            if not team_headers:
+                raise MatchParsingError("Failed to extract teams")
             # Filter out quarter headers (contain "čtvrtina")
             team_names = [
                 h3.get_text(strip=True) for h3 in team_headers if cls.QUARTER_HEADER_TEXT not in h3.get_text(strip=True)
@@ -66,6 +73,8 @@ class MatchInfoParser:
         """Extract score from HTML."""
         try:
             score_div = soup.find("div", class_=cls.SCORE_DIV_CLASS)
+            if not score_div:
+                raise MatchParsingError("Failed to extract score")
             score_text = score_div.get_text(strip=False)
             if cls.MATCH_FINISHED_TEXT not in score_text:
                 logger.info("Match is not finished yet. Skipping match.")
